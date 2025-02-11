@@ -118,31 +118,21 @@ Model::OBJLoaderInit(){
     tinyobj::ObjReaderConfig reader_config;
     reader_config.mtl_search_path = "OBJs/";
     tinyobj::ObjReader reader;
-		bool error = false;
+
 
     if (!reader.ParseFromFile(objFilePath+objFileName, reader_config)) {
         if (!reader.Error().empty()) {
             std::cerr << "TinyObjReader: " << reader.Error();
-						error = true;
         }
-        exit(1);
     }
 
     if (!reader.Warning().empty()) {
         std::cout << "TinyObjReader: " << reader.Warning();
-				error = true;
     }
 
     if (!reader.Valid()) {
         std::cout << "TinyObjReader: Could not read .obj file correctly" ;
-				error = true;
     }
-
-		if(error){
-			objFileName = latestObj;
-			return OBJLoaderInit();
-		}
-
 
     return reader;
 }
@@ -325,7 +315,14 @@ bool Model::checkOBJ() {
 void Model::loadGeometry()
 {
 
+    bool load_error = false;
     reader = OBJLoaderInit();
+    if (!reader.Error().empty()){
+        load_error = true;
+        objFileName = latestObj;
+        OBJLoaderInit();
+    }
+
 
     if(!checkOBJ()) return;
 
@@ -423,7 +420,11 @@ void Model::loadGeometry()
     glBindVertexArray(0);
     glUseProgram(0);
 
-    cout << ANSI_COLOR_GREEN << "Object " << objFileName << " loaded successfully!" << ANSI_COLOR_RESET << endl << endl;
+    if(load_error) {
+        cout << ANSI_COLOR_RED << "Failed to load Object " << objFileName << "." << ANSI_COLOR_RESET << endl << endl;
+    } else {
+        cout << ANSI_COLOR_GREEN << "Object " << objFileName << " loaded successfully!" << ANSI_COLOR_RESET << endl << endl;
+    }
 
 }
 

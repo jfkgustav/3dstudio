@@ -267,7 +267,7 @@ OpenGLWindow::DrawGui()
 
     bool textureShow = getTxtShow();
 
-    string path_to_objs = "./OBJs";
+    string path_to_objs = "./OBJs/";
     objFilePath = path_to_objs;
 
     ImGui::Begin("3D Studio");
@@ -276,6 +276,7 @@ OpenGLWindow::DrawGui()
         ImGui::Text("OBJ file: %s", objFileName.c_str());
         if (ImGui::Button("Open File"))
             fileDialog.OpenDialog("ChooseFileDlgKey", "Choose File", ".obj", ".");
+
         if (ImGui::Button("Cube")){
             objFileName = "cube.obj";
             changeObject();
@@ -304,7 +305,7 @@ OpenGLWindow::DrawGui()
         if (fileDialog.Display("ChooseFileDlgKey")) {
             if (fileDialog.IsOk() == true) {
                 objFileName = fileDialog.GetCurrentFileName();
-                objFilePath = fileDialog.GetCurrentPath();
+                objFilePath = fileDialog.GetCurrentPath() + "/";
                 cout << "OBJ file: " << objFileName << endl << "Path: " << objFilePath << endl;
             }
             fileDialog.Close();

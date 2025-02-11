@@ -1,4 +1,3 @@
-
 /*
  *  Workshop 1
  *  Computer Graphics course
@@ -14,7 +13,7 @@ OpenGLWindow* glfwCallbackManager::app = nullptr;
 int main(int argc, char **argv)
 {
 
-    GeometryRender app("Workshop 1", 900, 900);
+    GeometryRender app("3D Studio", 900, 900);
     glfwCallbackManager::initCallbacks(&app);
     app.initialize();
 

@@ -1,0 +1,12 @@
+# Detta är en ogiltig OBJ-fil
+v 1.0 0.0
+v 0.0 1.0 0.0 0.0  # För många koordinater
+v 0.0 0.0 1.0
+
+f 1 2 99  # Refererar till en icke-existerande vertex
+f 1/0/0 2/1/1 3/2/2  # Felaktig face-referens
+
+g
+mtllib material.mtl
+usemtl MissingMaterial  # Refererar till en saknad materialfil
+
